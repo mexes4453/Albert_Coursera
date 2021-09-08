@@ -58,6 +58,7 @@ ifeq ($(PLATFORM), MSP432)
         
         # Defines
 	OBJDUMP = arm-none-eabi-objdump
+	TARGET_SIZE = arm-none-eabi-size
 	CC = arm-none-eabi-gcc
 	LD = arm-none-eabi-ld
 	LDFLAGS  = -Wl,-Map=$(BASENAME).map -T $(LINKER_FILE)
@@ -66,6 +67,7 @@ ifeq ($(PLATFORM), MSP432)
 
 else    # define overriding for PLATFORM - HOST
 	OBJDUMP = objdump
+	TARGET_SIZE = size
 	CC = gcc
 	CFLAGS = -DHOST
 	LDFLAGS = -Wl,-Map=$(BASENAME).map
@@ -110,6 +112,7 @@ all:$(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC)  $(OBJS) $(CFLAGS) $(GCFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ 
+	$(TARGET_SIZE) $@
 	@echo ""
 	@echo ""
 

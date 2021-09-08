@@ -24,10 +24,11 @@
 
 #include <stdio.h>
 #include "stats.h"
-
+#include "platform.h"
 /* Size of the Data Set */
 #define SIZE (40)
 
+#ifdef TEST_STATS
 void main() {
 
   unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
@@ -41,6 +42,8 @@ void main() {
   //sort_array(test, SIZE);
   print_statistics(test, SIZE);
 }
+
+#endif
 
 /* Add other Implementation File Code Here */
 void print_statistics(unsigned char *dataSet, unsigned long data_length){
@@ -57,16 +60,19 @@ void print_statistics(unsigned char *dataSet, unsigned long data_length){
 
 
 void print_array(unsigned char *dataSet, unsigned long data_length){
+
+#if defined (VERBOSE)
     unsigned long i = 0;                                // data array indexer
-    sort_array(dataSet, data_length);                   // sort the data array         
-    printf("\n\nData array: ");                         // start printing on new line
+    //sort_array(dataSet, data_length);                   // sort the data array         
+    PRINTF("\n\nData array: ");                         // start printing on new line
 
     while(i < data_length){
-        if ((i%10) == 0) printf("\n\t");                // only print 10 numbers in a row - newline
-        printf("%-3u ", (unsigned int)(*(dataSet++)));  // print data array item
+        if ((i%10) == 0) PRINTF("\n\t");                // only print 10 numbers in a row - newline
+        PRINTF("%-3u ", (unsigned int)(*(dataSet++)));  // print data array item
         i++;                                            // increase array index
     }
-    printf("\n");
+    PRINTF("\n");
+#endif
 }
 
 

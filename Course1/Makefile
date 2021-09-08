@@ -48,7 +48,7 @@ OBJDUMP =
 
 ifeq ($(PLATFORM), MSP432)
 	# Architectures Specific Flags
-	LINKER_FILE = ../msp432p401r.lds
+	LINKER_FILE = ./msp432p401r.lds
 	CPU   = cortex-m4
 	ARCH  = thumb
 	SPECS = nosys.specs
@@ -63,22 +63,22 @@ ifeq ($(PLATFORM), MSP432)
 	LD = arm-none-eabi-ld
 	LDFLAGS  = -Wl,-Map=$(BASENAME).map -T $(LINKER_FILE)
 	CFLAGS   = -mcpu=$(CPU) -m$(ARCH) --specs=$(SPECS) -march=$(MARCH) \
-                   -mfloat-abi=$(FLOAT) -mfpu=$(FPU) -DMSP432
+                   -mfloat-abi=$(FLOAT) -mfpu=$(FPU) -DMSP432 -DCOURSE1 -DVERBOSE
 
 else    # define overriding for PLATFORM - HOST
 	OBJDUMP = objdump
 	TARGET_SIZE = size
 	CC = gcc
-	CFLAGS = -DHOST
+	CFLAGS = -DHOST -DCOURSE1 #-DVERBOSE
 	LDFLAGS = -Wl,-Map=$(BASENAME).map
-	SOURCES = ./main.c   \
-	          ./memory.c 
+	#SOURCES = ./main.c   \
+	#          ./memory.c 
     # etc
 endif
 
 
 # Compiler Flags and Defines
-BASENAME = c1m2
+BASENAME = c1m3
 TARGET   = $(BASENAME).out
 GCFLAGS  = -Wall -Werror -g -std=c99 -O0  # General Compiler flags
 CPPFLAGS = -E 
@@ -129,6 +129,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(GCFLAGS) $(INCLUDES) -o $@ $^
 	@echo ""
 	@echo ""
+
 # asm Output
 %.asm : %.o
 	$(OBJDUMP) -S $< > $@

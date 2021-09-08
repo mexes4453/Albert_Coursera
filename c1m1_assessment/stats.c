@@ -12,7 +12,7 @@
  * @file   <stats.c> 
  * @brief  <Statistics functions definition>
  *
- * <This file contains all function definition for data statistical analysis>
+ * <This file contains all function definition for data statistical analysis.>
  *
  *
  * @author <Chiemezie Albert Udoh>
